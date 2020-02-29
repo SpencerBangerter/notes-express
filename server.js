@@ -33,15 +33,10 @@ app.get('/notes', function(req, res) {
 app.post('/api/notes', function (req, res) {
   let newNote = req.body
   newNote.id = uuid()
-  console.log(newNote)
   fs.readFile("db/db.json", "utf-8", (err, data) => {
     if (err) throw err;
-
     let notesArray = JSON.parse(data);
-
     notesArray.push(newNote)
-    console.log(notesArray)
-
     fs.writeFile("db/db.json", JSON.stringify(notesArray), 'utf8', (err) =>{
       if (err) throw err;
       console.log('New Notes have been saved')
@@ -58,7 +53,22 @@ app.get('/api/notes', function (req, res) {
   })
 });
 
+//Delete note Route
 
+app.delete('/api/notes/:id', function (req, res) {
+  fs.readFile("db/db.json", "utf-8", (err, data) => {
+    if (err) throw err;
+    let notesArray = JSON.parse(data);
+    let deleteId = req.params.id
+    notesArray = notesArray.filter((el, i)=> el.id !== deleteId)
+
+    fs.writeFile("db/db.json", JSON.stringify(notesArray), 'utf8', (err) =>{
+      if (err) throw err;
+      console.log('Note has been deleted')
+    })
+  }),
+  res.status(200).end()
+})
 
 // Starts the server to begin listening
 // =============================================================
