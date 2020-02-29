@@ -1,4 +1,9 @@
 {
+  "nodemonConfig": {
+    "ignore": [
+      "db/*"
+    ]
+  },
   "name": "note-taker",
   "version": "1.0.0",
   "description": "## Description",

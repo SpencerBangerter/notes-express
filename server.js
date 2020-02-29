@@ -45,6 +45,15 @@ app.post('/api/notes', function (req, res) {
       console.log('New Notes have been saved')
     })
   })
+  res.status(200).end()
+});
+
+app.get('/api/notes', function (req, res) {
+
+  fs.readFile("db/db.json", "utf-8", (err, data) => {
+    if (err) throw err;
+    res.json(JSON.parse(data))
+  })
 });
 
 
