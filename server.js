@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 8080;
+const { uuid } = require('uuidv4');
 
 
 //Middleware
@@ -31,7 +32,8 @@ app.get('/notes', function(req, res) {
 
 app.post('/api/notes', function (req, res) {
   let newNote = req.body
-
+  newNote.id = uuid()
+  console.log(newNote)
   fs.readFile("db/db.json", "utf-8", (err, data) => {
     if (err) throw err;
 
